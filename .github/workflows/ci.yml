@@ -47,7 +47,7 @@ jobs:
         # also tests
         run: |
 
-        make test
+          make test
 
 
 
