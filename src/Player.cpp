@@ -1,12 +1,12 @@
 #include "Player.h"
 
-Player::Player(): Fighter(""), max_level(3), inventory(*this)
+Player::Player(): Fighter("", 100, 10), max_level(3), inventory(*this)
 {
     this->level = 1;
     this->exp = 0;
     this->gold = 0;
     this->x_pos = 14;  // начальная позиция x
-    this->y_pos = 7;   // начальная позиция y (центр по вертикали)
+    this->y_pos = 13;   // начальная позиция y (центр по вертикали)
     std::cout << "Enter the name of your hero: ";
     std::cin >> name;
     setName(name);
@@ -14,8 +14,9 @@ Player::Player(): Fighter(""), max_level(3), inventory(*this)
 
 void Player::onDeath()
 {
-    std::cout << "GAME OVER" << std::endl;
-    std::cout << "YOU ARE LOSE 💀" << std::endl;
+    unsigned int new_health = 0;
+    setHealth(new_health);
+    std::cout << "Game over! You are dead 💀" << std::endl;
 }
 
 void Player::levelUp()
@@ -107,4 +108,99 @@ void Player::setX_pos(unsigned int new_x_pos)
 void Player::setY_pos(unsigned int new_y_pos)
 {
     y_pos = new_y_pos;
+}
+
+void Player::attackArea(GameField& field, std::vector<std::shared_ptr<Enemy>>& enemies)
+{
+    // add attack visual
+    // check 8 cells around player
+    for (int ax = -1; ax < 2; ax++)
+    {
+        for (int ay = -1; ay < 2; ay++)
+        {
+            // pass by if its player
+            if (ax == 0 && ay == 0) continue;
+
+            int attack_x = x_pos + ax; // where will be attack
+            int attack_y = y_pos + ay; // and its too
+
+            char simb = field.getSymbol(attack_x, attack_y);
+            if (simb != '#' && simb != 's' && simb != 'Y' && simb != 'b' && simb != 'E' && simb != 'T')
+            {
+                attack_visuals.push_back({attack_x, attack_y}); // add attack visual item to vector
+                field.setSymbol(attack_x, attack_y, '*');
+            }
+
+            for (auto& enemy : enemies)
+            {
+                if (enemy->getX_pos() == attack_x && enemy->getY_pos() == attack_y)
+                {
+                    enemy->takeDamage(getDamage());
+                }
+            }
+        }
+    }
+}
+
+void Player::UpdateAttackVisual(GameField& field, std::vector<std::shared_ptr<Enemy>>& enemies)
+{
+    // earse attack visuals if time is up
+    for (auto i = attack_visuals.begin(); i != attack_visuals.end();)
+    // from begin vector to end
+    {
+        if (field.getSymbol(i->x, i->y) == '*')
+        {
+            bool flag = false;
+            for (auto& enemy : enemies) 
+            {
+                if (enemy->getX_pos() == i->x && enemy->getY_pos() == i->y)
+                {
+                    // for different enemies
+                    if (auto dragon = std::dynamic_pointer_cast<YardDragon> (enemy))
+                    {
+                        field.setSymbol(i->x, i->y, 'Y');
+                        flag = true;
+                    }
+                    if (auto slime = std::dynamic_pointer_cast<Slime> (enemy)) 
+                    { // dynamic_pointer_cast return nullptr if type conversion is impossible
+                        field.setSymbol(i->x, i->y, 's');
+                        flag = true;
+                    }
+                    if (auto bandit = std::dynamic_pointer_cast<Bandit> (enemy))
+                    {
+                        field.setSymbol(i->x, i->y, 'b');
+                        flag = true;
+                    }
+                }
+            }
+            if (!flag)
+            {
+                field.setSymbol(i->x, i->y, ' ');
+            }
+        }
+        i = attack_visuals.erase(i); // erase the element if time is up
+    // go to next element (iteration) of vector with erase
+    // check will be in every iteration of cycle (while in main.cpp)
+    }
+}
+
+void Player::NPCSpeak(std::vector<std::shared_ptr<NPC>>& npc_characters)
+{
+    for (int ax = -1; ax < 2; ax++)
+    {
+        for (int ay = -1; ay < 2; ay++)
+        {
+            if (ax == 0 && ay == 0) continue;
+
+            int posX = x_pos + ax;
+            int posY = y_pos + ay;
+            for (auto& npc : npc_characters)
+            {
+                if (npc->getX_pos() == posX && npc->getY_pos() == posY)
+                {
+                    npc->speak(); 
+                }
+            }
+        }
+    }
 }

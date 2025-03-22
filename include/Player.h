@@ -5,6 +5,20 @@
 #include "Inventory.h"
 #include "Amulet.h"
 #include <string>
+#include <vector>
+#include "Enemy.h"
+#include "GameField.h"
+#include "Bandit.h"
+#include "Slime.h"
+#include "YardDragon.h"
+#include <memory>
+#include <iostream>
+#include "NPC.h"
+
+class YardDragon;
+class Slime;
+class Bandit;
+// forward declaration
 
 class Player : public Fighter
 {
@@ -18,6 +32,12 @@ private:
     unsigned int y_pos;
     Inventory inventory;
 
+    struct AttackVisual
+    {
+        int x, y; // where was attack
+    };
+    std::vector<AttackVisual> attack_visuals; // vector for attack visuals
+
 public:
     Player();
     
@@ -25,6 +45,10 @@ public:
     void levelUp();
 
     std::string showInventory();
+
+    void NPCSpeak(std::vector<std::shared_ptr<NPC>>& npc_characters);
+    void attackArea(GameField& field, std::vector<std::shared_ptr<Enemy>>& enemies);
+    void UpdateAttackVisual(GameField& field, std::vector<std::shared_ptr<Enemy>>& enemies);
 
     // getters
     unsigned int getExp() const;

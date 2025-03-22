@@ -1,18 +1,25 @@
 #ifndef GAMEFIELD_H
 #define GAMEFIELD_H
 
-#include "Enemy.h"
-#include "Player.h"
-#include "Amulet.h"
+#include <vector>
+#include <memory>
+
+class Player;
+class Enemy;
+class YardDragon;
+class NPC;
+// forward declaration
 
 class GameField
 {
 private:
     char field[30][15];
-    Player player;
-    // Mucus mucus;
+    Player& player;
+    std::shared_ptr<YardDragon>& dragon;
+    std::vector<std::shared_ptr<Enemy>> enemies;
+    std::vector<std::shared_ptr<NPC>> npc_characters;
 public:
-    GameField(Player& p);
+    GameField(Player& p, std::shared_ptr<YardDragon>& d);
     ~GameField();
 
     void draw() const;
@@ -24,9 +31,24 @@ public:
 
     void playerSpawn(int x, int y);
     // void enemySpawn(int x, int y);
+    void yardDragonSpawn(int x, int y);
+    void elderSpawn(int x, int y);
+    void traderSpawn(int x, int y);
+    YardDragon& getDragon();
+    void slimeSpawn(int x, int y);
+    void banditSpawn(int x, int y);
+    bool checkCollision(int x, int y);
+    bool checkDragonRange(int x, int y);
+    void combat();
 
     void Movement(char where);
     // for movement of the player
+
+    std::vector<std::shared_ptr<Enemy>>& getEnemies();
+    std::vector<std::shared_ptr<NPC>>& getNPC();
+
+    void moveEnemies();
+
 };
 
 
