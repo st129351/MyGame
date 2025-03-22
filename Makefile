@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -g -Wall -pthread -I. -Werror -Wpedantic
+CXXFLAGS = -g -Wall -pthread -I. -Werror -Wpedantic
 CXX_FLAG = -Iinclude
 GTEST_LIBS = -lgtest -lgtest_main -lpthread
 
