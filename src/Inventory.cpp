@@ -43,7 +43,7 @@ void Inventory::add(std::shared_ptr<Amulet> item)
 
 void Inventory::remove(std::shared_ptr<Amulet> item)
 {
-    for (int i = 0; i < amulets.size(); i++)
+    for (size_t i = 0; i < amulets.size(); i++) // vector.size() usually return "size_t" type
     {
         if (amulets[i] == item)
         {
