@@ -1,5 +1,6 @@
 #include "Amulet.h"
 #include "Player.h"
+// full including
 
 Amulet::Amulet(unsigned int cost, bool usage, std::string name, std::string description, unsigned int slots)
 {
