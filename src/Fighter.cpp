@@ -1,10 +1,10 @@
 #include "Fighter.h"
 
-Fighter::Fighter(const std::string& name)
+Fighter::Fighter(const std::string& name, unsigned int health, unsigned int damage)
 {
     this->name = name;
-    this->damage = 10;
-    this->health = 100;
+    this->damage = damage;
+    this->health = health;
 }
 
 std::string Fighter::getName() const
@@ -44,22 +44,15 @@ bool Fighter::isAlive() const
 
 void Fighter::takeDamage(unsigned int damage)
 {
-    if (isAlive())
+    if (damage >= health)
     {
-        if (health - damage >= 0)
-        {
-            health -= damage;
-        }
-        else
-        {
-            health = 0;
-        }
+        health = 0;
+        onDeath();
     }
-    if (not isAlive())
+    else
     {
-        std::cout << name << "is dead 💥" << std::endl;
+        health -= damage;
     }
-
 }
 
 void Fighter::attack(Fighter& target)

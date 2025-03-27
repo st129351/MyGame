@@ -12,7 +12,7 @@ private:
     unsigned int damage;
     std::string name;
 public:
-    Fighter(const std::string& name);
+    Fighter(const std::string& name, unsigned int health, unsigned int damage);
     virtual ~Fighter() {} // virtual default destructor
     virtual void onDeath() = 0; // pure virtual function (function hasn't realisation in base class)
     // function that will be realised in derived classes
