@@ -28,8 +28,8 @@ private:
     const unsigned int max_level;
     unsigned int exp;
     unsigned int gold;
-    unsigned int x_pos;
-    unsigned int y_pos;
+    int x_pos;
+    int y_pos;
     Inventory inventory;
 
     struct AttackVisual
@@ -56,8 +56,8 @@ public:
     unsigned int getLevel() const;
     unsigned int getMaxLevel() const;
     std::string getName() const;
-    unsigned int getX_pos() const;
-    unsigned int getY_pos() const;
+    int getX_pos() const;
+    int getY_pos() const;
     // setters
     void setExp(unsigned int new_exp);
     void setGold(unsigned int new_gold);

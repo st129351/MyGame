@@ -90,12 +90,12 @@ void Player::setName(const std::string& new_name)
     name = new_name;
 }
 
-unsigned int Player::getX_pos() const
+int Player::getX_pos() const
 {
     return x_pos;
 }
 
-unsigned int Player::getY_pos() const
+int Player::getY_pos() const
 {
     return y_pos;
 }
