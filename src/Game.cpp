@@ -1,4 +1,10 @@
 #include "Game.h"
+#include "Enemy.h"
+#include "Slime.h"
+#include "Fighter.h"
+#include "Amulet.h"
+#include "YardDragon.h"
+
 
 Game::Game(Player& p) : player(p), field(player, dragon)
 {
@@ -32,14 +38,13 @@ void Game::start_game()
     // field.slimeSpawn(28, 2); // spawn slime
 	// field.banditSpawn(3, 2); // spawn bandit
 	// field.yardDragonSpawn(14, 4); // BOSS (yard dragon) spawn
-    // field.traderSpawn(10, 10);
+    field.traderSpawn(10, 10);
 	field.elderSpawn(10, 5);
 
     enableRawMode();
 
     while (true)
 	{
-
 		if (flag <= 1)
 		{
 			std::cout << "\033[2J\033[1;1H"; // clear the console
@@ -56,8 +61,6 @@ void Game::start_game()
 		field.combat();
 		player.UpdateAttackVisual(field, field.getEnemies());
 		
-
-		usleep(100); // for smooth movement
 		for (auto& enemy : field.getEnemies())
 		{
 			std::cout << enemy->getName() << " HP:" << enemy->getHealth() <<std::endl;
@@ -68,7 +71,11 @@ void Game::start_game()
 		{
 			break;
 		}
-
+		if (isdigit(input))
+		{
+			std::cout << "\033[2J\033[1;1H"; // clear the console
+			field.Buy(input);
+		}
 		input = getchar(); // get the input letter from keyboard
 		if (input == 'q')
 		{
@@ -76,7 +83,7 @@ void Game::start_game()
 			break;
 		}
 		// for walking use only WASD
-		if (input == 'w' || input == 'a' || input == 's' || input == 'd' || input == 'j' ||  input == 'e')
+		if (input == 'w' || input == 'a' || input == 's' || input == 'd' || input == 'j' ||  input == 'e' || input == 'i')
 		{
 			std::cout << "\033[2J\033[1;1H"; // clear the console
 			field.Movement(input); // processing the input value

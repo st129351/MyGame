@@ -1,4 +1,6 @@
 #include "Enemy.h"
+#include "GameField.h"
+#include "Player.h"
 
 Enemy::Enemy(std::string name, unsigned int health, unsigned int damage, unsigned int iq, unsigned int exp, Player* player) : Fighter(name, health, damage)
 {

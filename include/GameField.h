@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <memory>
+# include <cctype> // to use fast checking for a number (isdigit)
 
 class Player;
 class Enemy;
@@ -41,6 +42,7 @@ public:
     bool checkDragonRange(int x, int y);
     void combat();
 
+    void Buy(char symb);
     void Movement(char where);
     // for movement of the player
 

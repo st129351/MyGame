@@ -1,23 +1,21 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Fighter.h"
-#include "Inventory.h"
-#include "Amulet.h"
+
 #include <string>
 #include <vector>
-#include "Enemy.h"
-#include "GameField.h"
-#include "Bandit.h"
-#include "Slime.h"
-#include "YardDragon.h"
 #include <memory>
 #include <iostream>
-#include "NPC.h"
+#include "Inventory.h"
+#include "Fighter.h"
 
+class NPC;
+class Enemy;
+class AFearOfDeath;
 class YardDragon;
 class Slime;
 class Bandit;
+class GameField;
 // forward declaration
 
 class Player : public Fighter
@@ -31,6 +29,8 @@ private:
     int x_pos;
     int y_pos;
     Inventory inventory;
+
+    std::shared_ptr<AFearOfDeath> fear_death;
 
     struct AttackVisual
     {
@@ -46,7 +46,8 @@ public:
 
     std::string showInventory();
 
-    void NPCSpeak(std::vector<std::shared_ptr<NPC>>& npc_characters);
+    void Buy(std::vector<std::shared_ptr<NPC>> npc_characters, char symb);
+    void NPCSpeak(std::vector<std::shared_ptr<NPC>> npc_characters);
     void attackArea(GameField& field, std::vector<std::shared_ptr<Enemy>>& enemies);
     void UpdateAttackVisual(GameField& field, std::vector<std::shared_ptr<Enemy>>& enemies);
 

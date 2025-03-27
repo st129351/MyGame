@@ -62,8 +62,16 @@ void GameField::playerSpawn(int x, int y)
     setSymbol(x, y, '@');
 }
 
+void GameField::Buy(char symb)
+{
+    player.Buy(npc_characters, symb);
+}
 void GameField::Movement(char where)
 {
+    if (where == 'e' || where == 'i')
+    {
+        std::cout << "\033[2J\033[1;1H"; // clear the console
+    }
     int new_x = player.getX_pos();
     int new_y = player.getY_pos();
 
@@ -75,6 +83,7 @@ void GameField::Movement(char where)
         case 'd': new_x++; break;
         case 'j': player.attackArea(*this, enemies); break;
         case 'e': player.NPCSpeak(npc_characters); break;
+        case 'i': player.showInventory(); break;
         return;
     }
     // add collision on walls and enemies

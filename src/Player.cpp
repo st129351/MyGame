@@ -1,7 +1,17 @@
 #include "Player.h"
+#include "Enemy.h"
+#include "GameField.h"
+#include "Bandit.h"
+#include "Slime.h"
+#include "YardDragon.h"
+#include "Fighter.h"
+#include "NPC.h"
+#include "AFearOfDeath.h"
+#include "Amulet.h"
 
 Player::Player(): Fighter("", 100, 10), max_level(3), inventory(*this)
 {
+    this->fear_death = std::make_shared<AFearOfDeath> (*this);
     this->level = 1;
     this->exp = 0;
     this->gold = 0;
@@ -184,7 +194,7 @@ void Player::UpdateAttackVisual(GameField& field, std::vector<std::shared_ptr<En
     }
 }
 
-void Player::NPCSpeak(std::vector<std::shared_ptr<NPC>>& npc_characters)
+void Player::NPCSpeak(std::vector<std::shared_ptr<NPC>> npc_characters)
 {
     for (int ax = -1; ax < 2; ax++)
     {
@@ -199,6 +209,45 @@ void Player::NPCSpeak(std::vector<std::shared_ptr<NPC>>& npc_characters)
                 if (npc->getX_pos() == posX && npc->getY_pos() == posY)
                 {
                     npc->speak(); 
+                }
+            }
+        }
+    }
+}
+
+void Player::Buy(std::vector<std::shared_ptr<NPC>> npc_characters, char symb)
+{
+    int num = symb - '0'; // symb to number by ASCII (0 has code 48, able to converct symb 1-9 to number)
+    if (num > 8) // only 8 amulets
+    {
+        return;
+    }
+    for (int ax = -1; ax < 2; ax++)
+    {
+        for (int ay = -1; ay < 2; ay++)
+        {
+            if (ax == 0 && ay == 0) continue;
+
+            int posX = x_pos + ax;
+            int posY = y_pos + ay;
+            for (auto& npc : npc_characters)
+            {
+                if (npc->getX_pos() == posX && npc->getY_pos() == posY)
+                {
+                    if (num == 1)
+                    {
+                        if (fear_death->getCost() <= getGold())
+                        {
+                            int new_gold = getGold() - fear_death->getCost();
+                            setGold(new_gold);
+                            std::shared_ptr<Amulet> amulet = fear_death;
+                            inventory.add(amulet);
+                        }
+                        else
+                        {
+                            std::cout << "insufficient funds :(";
+                        }
+                    }
                 }
             }
         }

@@ -7,13 +7,11 @@
 #include <termios.h>
 #include <unistd.h>
 
-#include "GameField.h"
+
 #include "Player.h"
-#include "Enemy.h"
-#include "Slime.h"
-#include "Fighter.h"
-#include "Amulet.h"
-#include "YardDragon.h"
+#include "GameField.h"
+
+class YardDragon;
 
 class Game
 {
