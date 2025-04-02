@@ -64,14 +64,10 @@ void GameField::playerSpawn(int x, int y)
 
 void GameField::Buy(char symb)
 {
-    player.Buy(npc_characters, symb);
+    player.Buy(npc_characters, symb, *this);
 }
 void GameField::Movement(char where)
 {
-    if (where == 'e' || where == 'i')
-    {
-        std::cout << "\033[2J\033[1;1H"; // clear the console
-    }
     int new_x = player.getX_pos();
     int new_y = player.getY_pos();
 
@@ -83,9 +79,10 @@ void GameField::Movement(char where)
         case 'd': new_x++; break;
         case 'j': player.attackArea(*this, enemies); break;
         case 'e': player.NPCSpeak(npc_characters); break;
-        case 'i': player.showInventory(); break;
+        case 'i': std::cout << player.showInventory() << std::endl; break;
         return;
     }
+
     // add collision on walls and enemies
     if (getSymbol(new_x, new_y) != '#' && getSymbol(new_x, new_y) != 's' && getSymbol(new_x, new_y) != 'b' && getSymbol(new_x, new_y) != 'Y' && getSymbol(new_x, new_y) != 'E' && getSymbol(new_x, new_y) != 'T')
     {
@@ -140,7 +137,7 @@ void GameField::elderSpawn(int x, int y)
 
 void GameField::traderSpawn(int x, int y)
 {
-    auto trader = std::make_shared<Trader> (player);
+    auto trader = std::make_shared<Trader> (player, *this);
     std::shared_ptr<NPC> npc = trader;
     npc->setX_pos(x);
     npc->setY_pos(y);

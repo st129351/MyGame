@@ -17,8 +17,9 @@ private:
     char field[30][15];
     Player& player;
     std::shared_ptr<YardDragon>& dragon;
-    std::vector<std::shared_ptr<Enemy>> enemies;
     std::vector<std::shared_ptr<NPC>> npc_characters;
+protected:
+    std::vector<std::shared_ptr<Enemy>> enemies;
 public:
     GameField(Player& p, std::shared_ptr<YardDragon>& d);
     ~GameField();

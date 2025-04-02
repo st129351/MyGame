@@ -14,6 +14,8 @@ void Slime::onDeath()
     Player& curr_player = this->getPlayer();
     unsigned int new_exp = curr_player.getExp() + this->getExp();
     curr_player.setExp(new_exp);
+    unsigned int new_gold = curr_player.getGold() + this->getExp() * 2;
+    curr_player.setGold(new_gold);
     std::cout << "Slime is dead 💥" << std::endl;
 }
 

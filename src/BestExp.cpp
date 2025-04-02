@@ -1,10 +1,10 @@
 #include "BestExp.h"
 #include "Player.h"
 
-BestExp::BestExp(Player& p) : Amulet(15, false, "bestexp", "increases the experience gained", 1)
+BestExp::BestExp(Player& p) : Amulet(15, false, "bestexp", "increases the experience at every step", 1)
 {
-    best_exp_description = "increases the experience gained";
-    add_exp = 5;
+    best_exp_description = "increases the experience at every step";
+    add_exp = 1;
 }
 
 BestExp::~BestExp() {}

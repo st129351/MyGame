@@ -5,16 +5,17 @@
 
 class Player;
 class Enemy;
+class GameField;
 
 class AKillerLook : public Amulet
 {
 private:
     const unsigned int fear_percentage;
     std::string killer_look_description;
-    std::vector<Enemy*> enemies;
+    std::vector<std::shared_ptr<Enemy>> enemies;
     // vector for all enemies, who will be affected by the amulet
 public:
-    AKillerLook(Enemy& e);
+    AKillerLook(std::vector<std::shared_ptr<Enemy>> e);
     ~AKillerLook() override;
 
     void use(Player& p) override;

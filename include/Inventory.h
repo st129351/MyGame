@@ -11,7 +11,7 @@ class Amulet;
 class Inventory
 {
 private:
-    const unsigned int max_slots = 20;
+    const unsigned int max_slots = 25;
     unsigned int size;
     Player& player;
 
@@ -27,11 +27,11 @@ public:
 
     void add(std::shared_ptr<Amulet> item);
 
-    void remove(std::shared_ptr<Amulet> item);
+    // void remove(std::shared_ptr<Amulet> item);
 
-    void put_on(size_t index);
+    // void put_on(size_t index);
 
-    void take_off(size_t index);
+    // void take_off(size_t index);
 
 };
 

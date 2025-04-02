@@ -60,6 +60,8 @@
         "random": "cpp",
         "type_traits": "cpp",
         "utility": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "charconv": "cpp",
+        "forward_list": "cpp"
     }
 }

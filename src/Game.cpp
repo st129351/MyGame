@@ -4,7 +4,9 @@
 #include "Fighter.h"
 #include "Amulet.h"
 #include "YardDragon.h"
-
+#include "APerseverance.h"
+#include "BestExp.h"
+#include "AHeal.h"
 
 Game::Game(Player& p) : player(p), field(player, dragon)
 {
@@ -35,20 +37,26 @@ void Game::disableRawMode()
 
 void Game::start_game()
 {
-    // field.slimeSpawn(28, 2); // spawn slime
+	// field.slimeSpawn(28, 2);
+	field.banditSpawn(1, 9);
+	field.slimeSpawn(1, 1); // spawn slime
+	field.slimeSpawn(8, 8);
+	field.slimeSpawn(4, 10);
+	field.slimeSpawn(10, 1);
 	// field.banditSpawn(3, 2); // spawn bandit
 	// field.yardDragonSpawn(14, 4); // BOSS (yard dragon) spawn
-    field.traderSpawn(10, 10);
-	field.elderSpawn(10, 5);
+    field.traderSpawn(13, 13);
+	// field.elderSpawn(10, 5);
 
     enableRawMode();
 
     while (true)
 	{
+
 		if (flag <= 1)
 		{
 			std::cout << "\033[2J\033[1;1H"; // clear the console
-			std::cout << "hi, dear player" << std::endl;
+			std::cout << "hi, dear " << player.getName() << "!" << std::endl;
 			std::cout << "use WASD to move" << std::endl;
 			std::cout << "use J to attack, E to talk with NPC" << std::endl;
 			std::cout << "use Q to quit" << std::endl;
@@ -56,6 +64,18 @@ void Game::start_game()
 		}
 
 		// dragon->UpdateFireVisual(field, player);
+		std::cout << R"(
+ ▄▄▄     ███████╗██╗     ███████╗ █████╗     ▄▄▄ 
+▐   ▐    ██╔════╝██║     ╚══███╔╝██╔══██╗   ▐   ▐
+ ▐   ▀▀▄▀█████╗  ██║       ███╔╝ ███████║▀▄▀▀  ▐
+◇   ██   ██╔══╝  ██║      ███╔╝  ██╔══██║   ██  ◇
+   ▐  ▐  ███████╗███████╗███████╗██║  ██║  ▐  ▐
+  ▐    ▐ ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝ ▐    ▐
+  ◇     ▐       ▐        ▐       ▐       ▐     ◇
+       ◇  ◇      ▐      ▐       ▐       ◇  ◇
+                 ◇       ◇      ◇
+		)" << std::endl;
+		
 		field.draw(); // draw the field
 		field.moveEnemies();
 		field.combat();
@@ -65,7 +85,7 @@ void Game::start_game()
 		{
 			std::cout << enemy->getName() << " HP:" << enemy->getHealth() <<std::endl;
 		}
-		std::cout << "your HP:" << player.getHealth() << "; your EXP: " << player.getExp() << std::endl;
+		std::cout << "your HP:" << player.getHealth() << "; your EXP: " << player.getExp() << "; your Gold: " << player.getGold() << std::endl;
 
 		if (!player.isAlive())
 		{
@@ -73,7 +93,7 @@ void Game::start_game()
 		}
 		if (isdigit(input))
 		{
-			std::cout << "\033[2J\033[1;1H"; // clear the console
+			// std::cout << "\033[2J\033[1;1H"; // clear the console
 			field.Buy(input);
 		}
 		input = getchar(); // get the input letter from keyboard
@@ -91,6 +111,19 @@ void Game::start_game()
 		else
 		{
 			std::cout << "\033[2J\033[1;1H"; // clear the console
+		}
+
+		if (player.getPersevFlag())
+		{
+			player.getPersev()->use(player);
+		}
+		if (player.getBestExpFlag())
+		{
+			player.getBestExp()->use(player);
+		}
+		if (player.getHealFlag())
+		{
+			player.getHeal()->use(player);
 		}
 	}
 }
