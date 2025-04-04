@@ -2,6 +2,7 @@
 #define AKILLERLOOK_H
 
 #include "Amulet.h"
+#include <memory>
 
 class Player;
 class Enemy;
