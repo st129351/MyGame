@@ -20,16 +20,6 @@ void AKillerLook::use(Player& p)
     }
 }
 
-void AKillerLook::dont_use(Player& p)
-{
-    for (std::shared_ptr<Enemy> enemy : enemies)
-    {
-        unsigned int percent = fear_percentage * p.getLevel();
-        unsigned int value = enemy->getDamage() + enemy->getIQ() * percent / 100;
-        enemy->setDamage(value);
-    }
-}
-
 unsigned int AKillerLook::getFearPercentage() const
 {
     return fear_percentage;

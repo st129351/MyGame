@@ -19,7 +19,6 @@ public:
     ~AKillerLook() override;
 
     void use(Player& p) override;
-    void dont_use(Player& p) override;
 
     unsigned int getFearPercentage() const;
     std::string getKillerLookDescription() const;

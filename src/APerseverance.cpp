@@ -21,21 +21,16 @@ void APerseverance::use(Player& p)
             setWasUsed(true);
         }
     }
-    else
-    {
-        warning();
-    }
+    // else
+    // {
+    //     warning();
+    // }
 }
 
-void APerseverance::warning()
-{
-    std::cout << "Firstly, you need to go to the blacksmith and..." << std::endl;
-}
-
-void APerseverance::dont_use(Player& p)
-{
-    return;
-}
+// void APerseverance::warning()
+// {
+//     std::cout << "Firstly, you need to go to the blacksmith and..." << std::endl;
+// }
 
 unsigned int APerseverance::getAdditionalHealth() const
 {

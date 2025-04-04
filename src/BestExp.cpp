@@ -14,11 +14,6 @@ void BestExp::use(Player& p)
     p.setExp(p.getExp() + add_exp);
 }
 
-void BestExp::dont_use(Player& p)
-{
-    p.setExp(p.getExp() - add_exp);
-}
-
 unsigned int BestExp::getAddExp() const
 {
     return add_exp;

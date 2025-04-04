@@ -24,6 +24,7 @@ GameField::GameField(Player& p, std::shared_ptr<YardDragon>& d) : player(p), dra
         }
     }
     playerSpawn(player.getX_pos(), player.getY_pos());
+    p_was_seen_d = false;
 }
 
 GameField::~GameField() {}
@@ -55,6 +56,16 @@ void GameField::setSymbol(int x, int y, char new_symbol)
     {
         field[x][y] = new_symbol;
     }
+}
+
+bool GameField::getPWasSeenD() const
+{
+    return p_was_seen_d;
+}
+
+void GameField::setPWasSeenD(bool new_value)
+{
+    p_was_seen_d = new_value;
 }
 
 void GameField::playerSpawn(int x, int y)
@@ -160,7 +171,7 @@ bool GameField::checkDragonRange(int x, int y)
 {
     int a = player.getX_pos() - x;
     int b = player.getY_pos() - y;
-    if (abs(a) <= 4 && abs(b) <= 4)
+    if (abs(a) <= 3 && abs(b) <= 3)
     {
         return true;
     }
@@ -175,8 +186,37 @@ void GameField::combat()
         {
             if (checkDragonRange(dragon->getX_pos(), dragon->getY_pos()))
             {
+                p_was_seen_d = true;
+                dragon->setCanMove(false); // start attack
+
                 dragon->FireAttack(*this, player);
 
+                if (!(dragon->isAlive()))
+                {
+                    setSymbol(dragon->getX_pos(), dragon->getY_pos(), ' ');
+                    // dragon->onDeath();
+                    enemies.erase(enemies.begin() + i);
+                    break;
+                }
+            }
+            else if (!checkDragonRange(dragon->getX_pos(), dragon->getY_pos()) && p_was_seen_d) // if player was seen by dragon
+            {
+                dragon->setCanMove(false); // start attack
+
+                dragon->FireAttack(*this, player);
+
+                if (!(dragon->isAlive()))
+                {
+                    setSymbol(dragon->getX_pos(), dragon->getY_pos(), ' ');
+                    // dragon->onDeath();
+                    enemies.erase(enemies.begin() + i);
+                    break;
+                }
+            }
+            else if (!checkDragonRange(dragon->getX_pos(), dragon->getY_pos()) && !p_was_seen_d)
+            {
+                dragon->UpdateFireVisual(*this, player);
+                
                 if (!(dragon->isAlive()))
                 {
                     setSymbol(dragon->getX_pos(), dragon->getY_pos(), ' ');

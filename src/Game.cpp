@@ -10,7 +10,7 @@
 
 Game::Game(Player& p) : player(p), field(player, dragon)
 {
-    dragon = std::make_shared<YardDragon>("Yard Dragon", 200, 30, 45, 100, &player, 4);
+    dragon = std::make_shared<YardDragon>("Yard Dragon", 200, 30, 45, 100, &player, 5);
     flag = 0;
 }
 
@@ -38,13 +38,13 @@ void Game::disableRawMode()
 void Game::start_game()
 {
 	// field.slimeSpawn(28, 2);
-	field.banditSpawn(1, 9);
-	field.slimeSpawn(1, 1); // spawn slime
-	field.slimeSpawn(8, 8);
-	field.slimeSpawn(4, 10);
-	field.slimeSpawn(10, 1);
+	// field.banditSpawn(1, 9);
+	// field.slimeSpawn(1, 1); // spawn slime
+	// field.slimeSpawn(8, 8);
+	// field.slimeSpawn(4, 10);
+	// field.slimeSpawn(10, 1);
 	// field.banditSpawn(3, 2); // spawn bandit
-	// field.yardDragonSpawn(14, 4); // BOSS (yard dragon) spawn
+	field.yardDragonSpawn(14, 4); // BOSS (yard dragon) spawn
     field.traderSpawn(13, 13);
 	// field.elderSpawn(10, 5);
 
@@ -52,7 +52,17 @@ void Game::start_game()
 
     while (true)
 	{
-
+		std::cout << R"(
+ ▄▄▄    ████╗███████╗███╗   ███╗ █████╗     ▄▄▄ 
+▐   ▐    ██╔╝╚══███╔╝████╗ ████║██╔══██╗   ▐   ▐
+ ▐   ▀▀▄▀██║   ███╔╝ ██╔████╔██║███████║▀▄▀▀  ▐
+◇   ██   ██║  ███╔╝  ██║╚██╔╝██║██╔══██║   ██  ◇
+   ▐  ▐ ████╗███████╗██║ ╚═╝ ██║██║  ██║  ▐  ▐
+  ▐    ▐╚═══╝╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝ ▐    ▐
+  ◇     ▐       ▐        ▐       ▐       ▐     ◇
+       ◇  ◇      ▐      ▐       ▐       ◇  ◇
+                 ◇       ◇      ◇
+				   )" << std::endl;
 		if (flag <= 1)
 		{
 			std::cout << "\033[2J\033[1;1H"; // clear the console
@@ -64,21 +74,22 @@ void Game::start_game()
 		}
 
 		// dragon->UpdateFireVisual(field, player);
-		std::cout << R"(
- ▄▄▄     ███████╗██╗     ███████╗ █████╗     ▄▄▄ 
-▐   ▐    ██╔════╝██║     ╚══███╔╝██╔══██╗   ▐   ▐
- ▐   ▀▀▄▀█████╗  ██║       ███╔╝ ███████║▀▄▀▀  ▐
-◇   ██   ██╔══╝  ██║      ███╔╝  ██╔══██║   ██  ◇
-   ▐  ▐  ███████╗███████╗███████╗██║  ██║  ▐  ▐
-  ▐    ▐ ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝ ▐    ▐
-  ◇     ▐       ▐        ▐       ▐       ▐     ◇
-       ◇  ◇      ▐      ▐       ▐       ◇  ◇
-                 ◇       ◇      ◇
-		)" << std::endl;
 		
-		field.draw(); // draw the field
 		field.moveEnemies();
 		field.combat();
+		if (!dragon->getCanMove())
+		{
+			int new_fire_count = dragon->getFireCount() + 1;
+			dragon->setFireCount(new_fire_count);
+		}
+		if (dragon->getFireCount() == 6)
+		{
+			int new_fire_count = 0;
+			field.setPWasSeenD(false);
+			dragon->setFireCount(new_fire_count);
+			dragon->setCanMove(true);
+		}
+		field.draw(); // draw the field
 		player.UpdateAttackVisual(field, field.getEnemies());
 		
 		for (auto& enemy : field.getEnemies())

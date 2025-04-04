@@ -15,7 +15,6 @@ public:
     ~AHeal() override;
 
     void use(Player& p) override;
-    void dont_use(Player& p) override;
 
     unsigned int getHealValue() const;
     void setHealValue(unsigned int new_value);

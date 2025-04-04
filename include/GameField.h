@@ -18,6 +18,7 @@ private:
     Player& player;
     std::shared_ptr<YardDragon>& dragon;
     std::vector<std::shared_ptr<NPC>> npc_characters;
+    bool p_was_seen_d;
 protected:
     std::vector<std::shared_ptr<Enemy>> enemies;
 public:
@@ -30,6 +31,8 @@ public:
 
     char getSymbol(int x, int y) const;
     void setSymbol(int x, int y, char symbol);
+    bool getPWasSeenD() const;
+    void setPWasSeenD(bool new_value);
 
     void playerSpawn(int x, int y);
     // void enemySpawn(int x, int y);

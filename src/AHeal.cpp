@@ -1,9 +1,9 @@
 #include "AHeal.h"
 #include "Player.h"
 
-AHeal::AHeal() : Amulet(15, false, "bestexp", "increases the experience at every step", 5)
+AHeal::AHeal() : Amulet(15, false, "heal", "great healing power", 5)
 {
-    heal_description = "increases the experience at every step";
+    heal_description = "great healing power";
     heal_value = 5;
 }
 
@@ -28,12 +28,6 @@ void AHeal::use(Player& p)
     {
         return;
     }
-}
-
-void AHeal::dont_use(Player& p)
-{
-    unsigned int new_health = p.getHealth() - heal_value;
-    p.setHealth(new_health);
 }
 
 unsigned int AHeal::getHealValue() const
