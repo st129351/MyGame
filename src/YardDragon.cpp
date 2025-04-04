@@ -40,7 +40,7 @@ void YardDragon::FireAttack(GameField& field, Player& player)
 
             if ((fire_count == 0 || fire_count == 6) && ((abs(ax) == 1 || ax == 0) && (abs(ay) == 1 || ay == 0)))
             {
-                if (field.getSymbol(attackX, attackY) != '#' && field.getSymbol(attackX, attackY) != '@')
+                if (field.getSymbol(attackX, attackY) != '#' && field.getSymbol(attackX, attackY) != 'E' && field.getSymbol(attackX, attackY) != 'T' && field.getSymbol(attackX, attackY) != '@')
                 {
                     fire_visuals.push_back({attackX, attackY});
                     field.setSymbol(attackX, attackY, '~');
@@ -53,7 +53,7 @@ void YardDragon::FireAttack(GameField& field, Player& player)
             }
             else if ((fire_count == 1 || fire_count == 5) && ((abs(ax) <= 1 && abs(ay) == 2) || (abs(ax) == 2 && abs(ay) <= 2)))
             {
-                if (field.getSymbol(attackX, attackY) != '#' && field.getSymbol(attackX, attackY) != '@')
+                if (field.getSymbol(attackX, attackY) != '#' && field.getSymbol(attackX, attackY) != 'E' && field.getSymbol(attackX, attackY) != 'T' && field.getSymbol(attackX, attackY) != '@')
                 {
                     fire_visuals.push_back({attackX, attackY});
                     field.setSymbol(attackX, attackY, '~');
@@ -66,7 +66,7 @@ void YardDragon::FireAttack(GameField& field, Player& player)
             }
             else if ((fire_count == 2 || fire_count == 4) && ((abs(ax) <= 2 && abs(ay) == 3) || (abs(ax) == 3 && abs(ay) <= 3)))
             {
-                if (field.getSymbol(attackX, attackY) != '#' && field.getSymbol(attackX, attackY) != '@')
+                if (field.getSymbol(attackX, attackY) != '#' && field.getSymbol(attackX, attackY) != 'E' && field.getSymbol(attackX, attackY) != 'T' && field.getSymbol(attackX, attackY) != '@')
                 {
                     fire_visuals.push_back({attackX, attackY});
                     field.setSymbol(attackX, attackY, '~');
@@ -79,7 +79,7 @@ void YardDragon::FireAttack(GameField& field, Player& player)
             }
             else if (fire_count == 3 && ((abs(ax) <= 3 && abs(ay) == 4) || (abs(ax) == 4 && abs(ay) <= 4)))
             {
-                if (field.getSymbol(attackX, attackY) != '#' && field.getSymbol(attackX, attackY) != '@')
+                if (field.getSymbol(attackX, attackY) != '#' && field.getSymbol(attackX, attackY) != 'E' && field.getSymbol(attackX, attackY) != 'T' && field.getSymbol(attackX, attackY) != '@')
                 {
                     fire_visuals.push_back({attackX, attackY});
                     field.setSymbol(attackX, attackY, '~');
@@ -159,7 +159,7 @@ void YardDragon::move(Player& player, GameField& field)
 
     if (can_move)
     {
-        if (!field.checkCollision(this->getX_pos(), this->getY_pos()))
+        if (!field.checkCollision(this->getX_pos(), this->getY_pos()) && dist_x <= 8 && dist_y <= 8)
         {
             if (abs(dist_x) > abs(dist_y))
             {
@@ -194,7 +194,7 @@ void YardDragon::move(Player& player, GameField& field)
                     new_x++;
                 }
             }
-            if (field.getSymbol(new_x, new_y) != '#' && field.getSymbol(new_x, new_y) != 's' && field.getSymbol(new_x, new_y) != 'b' && field.getSymbol(new_x, new_y) != 'Y' && field.getSymbol(new_x, new_y) != '@')
+            if (field.getSymbol(new_x, new_y) != '#' && field.getSymbol(new_x, new_y) != 'E' && field.getSymbol(new_x, new_y) != 'T' && field.getSymbol(new_x, new_y) != 's' && field.getSymbol(new_x, new_y) != 'b' && field.getSymbol(new_x, new_y) != 'Y' && field.getSymbol(new_x, new_y) != '@')
             {
                 field.setSymbol(this->getX_pos(), this->getY_pos(), ' ');
                 this->setX_pos(new_x);

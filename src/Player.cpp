@@ -13,6 +13,7 @@
 #include "APerseverance.h"
 #include "BestExp.h"
 #include "AHeal.h"
+#include "ADash.h"
 
 Player::Player(): Fighter("", 100, 10), max_level(3), inventory(*this)
 {
@@ -21,12 +22,15 @@ Player::Player(): Fighter("", 100, 10), max_level(3), inventory(*this)
     this->gold = 1000;
     this->x_pos = 14;  // начальная позиция x
     this->y_pos = 13;   // начальная позиция y (центр по вертикали)
+    std::cout << "\033[2J\033[1;1H";
     std::cout << "Enter the name of your hero: ";
-    std::cin >> name;
+    std::cin.ignore(); // clear buffer, if \n
+    std::getline(std::cin, name);
     setName(name);
     persev_flag = false;
     best_exp_flag = false;
     heal_flag = false;
+    dash_flag = false;
 
     killer_look = nullptr;
     fear_death = nullptr;
@@ -34,12 +38,14 @@ Player::Player(): Fighter("", 100, 10), max_level(3), inventory(*this)
     persev = nullptr;
     best_exp = nullptr;
     heal = nullptr;
+    dash = nullptr;
 }
 
 void Player::onDeath()
 {
     unsigned int new_health = 0;
     setHealth(new_health);
+    std::cout << "\033[2J\033[1;1H";
     std::cout << "Game over! You are dead 💀" << std::endl;
 }
 
@@ -83,6 +89,11 @@ bool Player::getHealFlag() const
     return heal_flag;
 }
 
+bool Player::getDashFlag() const
+{
+    return dash_flag;
+}
+
 std::shared_ptr<APerseverance> Player::getPersev()
 {
     return persev;
@@ -96,6 +107,11 @@ std::shared_ptr<BestExp> Player::getBestExp()
 std::shared_ptr<AHeal> Player::getHeal() 
 {
     return heal;
+}
+
+std::shared_ptr<ADash> Player::getDash()
+{
+    return dash;
 }
 
 unsigned int Player::getExp() const
@@ -262,7 +278,7 @@ void Player::NPCSpeak(std::vector<std::shared_ptr<NPC>> npc_characters)
 void Player::Buy(std::vector<std::shared_ptr<NPC>> npc_characters, char symb, GameField& field)
 {
     int num = symb - '0'; // symb to number by ASCII (0 has code 48, able to converct symb 1-9 to number)
-    if (num > 6) // only 6 amulets
+    if (num > 7) // only 6 amulets
     {
         std::cout << "incorrect index of amulet!" << std::endl;
         return;
@@ -279,7 +295,7 @@ void Player::Buy(std::vector<std::shared_ptr<NPC>> npc_characters, char symb, Ga
             {
                 if (npc->getX_pos() == posX && npc->getY_pos() == posY)
                 {
-                    if (num == 1)
+                    if (num == 1 && fear_death == nullptr)
                     {
                         fear_death = std::make_shared<AFearOfDeath> (*this);
                         if (fear_death->getCost() <= getGold())
@@ -296,7 +312,12 @@ void Player::Buy(std::vector<std::shared_ptr<NPC>> npc_characters, char symb, Ga
                             std::cout << "insufficient funds :(";
                         }
                     }
-                    if (num == 2)
+                    else if (num == 1 && fear_death != nullptr)
+                    {
+                        std::cout << "This amulet is already on!" << std::endl;
+                    }
+
+                    if (num == 2 && killer_look == nullptr)
                     {
                         enemies = field.getEnemies();
                         killer_look = std::make_shared<AKillerLook> (enemies);
@@ -315,7 +336,12 @@ void Player::Buy(std::vector<std::shared_ptr<NPC>> npc_characters, char symb, Ga
                             std::cout << "insufficient funds :(";
                         }
                     }
-                    if (num == 3)
+                    else if (num == 2 && killer_look != nullptr)
+                    {
+                        std::cout << "This amulet is already on!" << std::endl;
+                    }
+
+                    if (num == 3 && madness == nullptr)
                     {
                         madness = std::make_shared<AMadness> (*this);
                         if (madness->getCost() <= getGold())
@@ -331,7 +357,12 @@ void Player::Buy(std::vector<std::shared_ptr<NPC>> npc_characters, char symb, Ga
                             std::cout << "insufficient funds :(";
                         }
                     }
-                    if (num == 4)
+                    else if (num == 3 && madness != nullptr)
+                    {
+                        std::cout << "This amulet is already on!" << std::endl;
+                    }
+
+                    if (num == 4 && persev == nullptr)
                     {
                         persev = std::make_shared<APerseverance> ();
                         if (persev->getCost() <= getGold())
@@ -349,7 +380,12 @@ void Player::Buy(std::vector<std::shared_ptr<NPC>> npc_characters, char symb, Ga
                             std::cout << "insufficient funds :(";
                         }
                     }
-                    if (num == 5)
+                    else if (num == 4 && persev != nullptr)
+                    {
+                        std::cout << "This amulet is already on!" << std::endl;
+                    }
+
+                    if (num == 5 && best_exp == nullptr)
                     {
                         best_exp = std::make_shared<BestExp> (*this);
                         if (best_exp->getCost() <= getGold())
@@ -366,7 +402,12 @@ void Player::Buy(std::vector<std::shared_ptr<NPC>> npc_characters, char symb, Ga
                             std::cout << "insufficient funds :(";
                         }
                     }
-                    if (num == 6)
+                    else if (num == 5 && best_exp != nullptr)
+                    {
+                        std::cout << "This amulet is already on!" << std::endl;
+                    }
+
+                    if (num == 6 && heal == nullptr)
                     {
                         heal = std::make_shared<AHeal> ();
                         if (heal->getCost() <= getGold())
@@ -382,6 +423,32 @@ void Player::Buy(std::vector<std::shared_ptr<NPC>> npc_characters, char symb, Ga
                         {
                             std::cout << "insufficient funds :(";
                         }
+                    }
+                    else if (num == 6 && heal != nullptr)
+                    {
+                        std::cout << "This amulet is already on!" << std::endl;
+                    }
+
+                    if (num == 7 && dash == nullptr)
+                    {
+                        dash = std::make_shared<ADash> (field);
+                        if (dash->getCost() <= getGold())
+                        {
+                            int new_gold = getGold() - dash->getCost();
+                            setGold(new_gold);
+                            dash_flag = true;
+                            dash->setUsage(true);
+                            std::shared_ptr<Amulet> amulet = dash;
+                            inventory.add(amulet);                        
+                        }
+                        else
+                        {
+                            std::cout << "insufficient funds :(";
+                        }
+                    }
+                    else if (num == 7 && dash != nullptr)
+                    {
+                        std::cout << "This amulet is already on!" << std::endl;
                     }
                 }
             }

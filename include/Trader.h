@@ -20,7 +20,8 @@ private:
     std::shared_ptr<Amulet> madness; 
     std::shared_ptr<Amulet> persev;
     std::shared_ptr<Amulet> best_exp;
-    std::shared_ptr<Amulet> heal; 
+    std::shared_ptr<Amulet> heal;
+    std::shared_ptr<Amulet> dash;
     std::vector<std::shared_ptr<Amulet>> amulets;
     std::vector<std::shared_ptr<Enemy>> enemies;
     Player& player;

@@ -21,6 +21,7 @@ class AMadness;
 class APerseverance;
 class BestExp;
 class AHeal;
+class ADash;
 // forward declaration
 
 class Player : public Fighter
@@ -36,6 +37,7 @@ private:
     bool persev_flag;
     bool best_exp_flag;
     bool heal_flag;
+    bool dash_flag;
     Inventory inventory;
     std::vector<std::shared_ptr<Enemy>> enemies;
 
@@ -45,6 +47,7 @@ private:
     std::shared_ptr<APerseverance> persev;
     std::shared_ptr<BestExp> best_exp;
     std::shared_ptr<AHeal> heal;
+    std::shared_ptr<ADash> dash;
     
     struct AttackVisual
     {
@@ -76,9 +79,11 @@ public:
     bool getPersevFlag() const;
     bool getBestExpFlag() const;
     bool getHealFlag() const;
+    bool getDashFlag() const;
     std::shared_ptr<APerseverance> getPersev();
     std::shared_ptr<BestExp> getBestExp();
     std::shared_ptr<AHeal> getHeal();
+    std::shared_ptr<ADash> getDash();
     // setters
     void setExp(unsigned int new_exp);
     void setGold(unsigned int new_gold);

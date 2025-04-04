@@ -9,6 +9,7 @@
 #include "APerseverance.h"
 #include "BestExp.h"
 #include "AHeal.h"
+#include "ADash.h"
 
 Trader::Trader(Player& p, GameField& f) : NPC("Trader", "Trader, who can sell you different interesting things."), player(p), field(f)
 {
@@ -25,6 +26,8 @@ Trader::Trader(Player& p, GameField& f) : NPC("Trader", "Trader, who can sell yo
     std::shared_ptr<Amulet> best_exp = be;
     std::shared_ptr<AHeal> h = std::make_shared<AHeal>();
     std::shared_ptr<Amulet> heal = h;
+    std::shared_ptr<ADash> d = std::make_shared<ADash>(field);
+    std::shared_ptr<Amulet> dash = d;
 
     amulets.push_back(fear_death);
     amulets.push_back(killer_look);
@@ -32,6 +35,7 @@ Trader::Trader(Player& p, GameField& f) : NPC("Trader", "Trader, who can sell yo
     amulets.push_back(persev);
     amulets.push_back(best_exp);
     amulets.push_back(heal);
+    amulets.push_back(dash);
 
     speak_flag = false;
 }
@@ -68,6 +72,6 @@ std::string Trader::showStore()
     ss << "How you can see, my toys don't have a descriprion." << std::endl;
     ss << "yet... Buy them and find out what they are capable of :)" << std::endl;
     ss << "if you want to buy, just press the number of amulet.";
-
+    setDialogueComplete(true);
     return ss.str();
 }

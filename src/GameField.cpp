@@ -25,6 +25,9 @@ GameField::GameField(Player& p, std::shared_ptr<YardDragon>& d) : player(p), dra
     }
     playerSpawn(player.getX_pos(), player.getY_pos());
     p_was_seen_d = false;
+    input_symb = 'w';
+    elder = nullptr;
+    trader = nullptr;
 }
 
 GameField::~GameField() {}
@@ -68,6 +71,21 @@ void GameField::setPWasSeenD(bool new_value)
     p_was_seen_d = new_value;
 }
 
+char GameField::getInputSymb() const
+{
+    return input_symb;
+}
+
+void GameField::setInputSymb(char new_symb)
+{
+    input_symb = new_symb;
+}
+
+std::shared_ptr<Elder> GameField::getElder()
+{
+    return elder;
+}
+
 void GameField::playerSpawn(int x, int y)
 {
     setSymbol(x, y, '@');
@@ -82,15 +100,13 @@ void GameField::Movement(char where)
     int new_x = player.getX_pos();
     int new_y = player.getY_pos();
 
-    switch (tolower(where))
+    switch (where)
     {
         case 'w': new_y--; break;
         case 's': new_y++; break;
         case 'a': new_x--; break;
         case 'd': new_x++; break;
         case 'j': player.attackArea(*this, enemies); break;
-        case 'e': player.NPCSpeak(npc_characters); break;
-        case 'i': std::cout << player.showInventory() << std::endl; break;
         return;
     }
 
@@ -103,6 +119,27 @@ void GameField::Movement(char where)
         player.setY_pos(new_y);
 
         setSymbol(player.getX_pos(), player.getY_pos(), '@');
+    }
+}
+
+void GameField::Interaction(char what)
+{
+    switch (what)
+    {
+        case 'e':
+            std::cout << "\033[2J\033[1;1H"; 
+            player.NPCSpeak(npc_characters);
+            std::cout << "Press any key to continue..." << std::endl;
+            getchar();
+            std::cout << "\033[2J\033[1;1H";
+            break;
+        case 'i': 
+            std::cout << "\033[2J\033[1;1H";
+            std::cout << player.showInventory() << std::endl; break;
+            std::cout << "Press any key to continue..." << std::endl;
+            getchar();
+            break;
+        return;
     }
 }
 // spawn enemies
@@ -138,7 +175,7 @@ void GameField::banditSpawn(int x, int y)
 
 void GameField::elderSpawn(int x, int y)
 {
-    auto elder = std::make_shared<Elder> ();
+    elder = std::make_shared<Elder> (); // MUST SPAWN
     std::shared_ptr<NPC> npc = elder;
     npc->setX_pos(x);
     npc->setY_pos(y);
@@ -148,7 +185,7 @@ void GameField::elderSpawn(int x, int y)
 
 void GameField::traderSpawn(int x, int y)
 {
-    auto trader = std::make_shared<Trader> (player, *this);
+    trader = std::make_shared<Trader> (player, *this);
     std::shared_ptr<NPC> npc = trader;
     npc->setX_pos(x);
     npc->setY_pos(y);
@@ -216,7 +253,6 @@ void GameField::combat()
             else if (!checkDragonRange(dragon->getX_pos(), dragon->getY_pos()) && !p_was_seen_d)
             {
                 dragon->UpdateFireVisual(*this, player);
-                
                 if (!(dragon->isAlive()))
                 {
                     setSymbol(dragon->getX_pos(), dragon->getY_pos(), ' ');

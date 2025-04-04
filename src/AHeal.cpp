@@ -4,7 +4,7 @@
 AHeal::AHeal() : Amulet(15, false, "heal", "great healing power", 5)
 {
     heal_description = "great healing power";
-    heal_value = 5;
+    heal_value = 1;
 }
 
 AHeal::~AHeal() {}

@@ -9,6 +9,8 @@ class Player;
 class Enemy;
 class YardDragon;
 class NPC;
+class Elder;
+class Trader;
 // forward declaration
 
 class GameField
@@ -17,8 +19,11 @@ private:
     char field[30][15];
     Player& player;
     std::shared_ptr<YardDragon>& dragon;
+    std::shared_ptr<Elder> elder;
+    std::shared_ptr<Trader> trader;
     std::vector<std::shared_ptr<NPC>> npc_characters;
     bool p_was_seen_d;
+    char input_symb;
 protected:
     std::vector<std::shared_ptr<Enemy>> enemies;
 public:
@@ -33,6 +38,9 @@ public:
     void setSymbol(int x, int y, char symbol);
     bool getPWasSeenD() const;
     void setPWasSeenD(bool new_value);
+    char getInputSymb() const;
+    void setInputSymb(char new_symb);
+    std::shared_ptr<Elder> getElder();
 
     void playerSpawn(int x, int y);
     // void enemySpawn(int x, int y);
@@ -48,6 +56,7 @@ public:
 
     void Buy(char symb);
     void Movement(char where);
+    void Interaction(char what);
     // for movement of the player
 
     std::vector<std::shared_ptr<Enemy>>& getEnemies();

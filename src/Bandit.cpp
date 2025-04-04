@@ -26,7 +26,7 @@ void Bandit::move(Player& player, GameField& field)
     int new_x = this->getX_pos();
     int new_y = this->getY_pos();
 
-    if (!field.checkCollision(this->getX_pos(), this->getY_pos()))
+    if (!field.checkCollision(this->getX_pos(), this->getY_pos()) && dist_x <= 5 && dist_y <= 5)
     {
         if (abs(dist_x) > abs(dist_y))
         {
@@ -61,7 +61,7 @@ void Bandit::move(Player& player, GameField& field)
                 new_x++;
             }
         }
-        if (field.getSymbol(new_x, new_y) != '#' && field.getSymbol(new_x, new_y) != 's' && field.getSymbol(new_x, new_y) != 'b' && field.getSymbol(new_x, new_y) != 'Y' && field.getSymbol(new_x, new_y) != '@')
+        if (field.getSymbol(new_x, new_y) != '#' && field.getSymbol(new_x, new_y) != 'E' && field.getSymbol(new_x, new_y) != 'T' && field.getSymbol(new_x, new_y) != 's' && field.getSymbol(new_x, new_y) != 'b' && field.getSymbol(new_x, new_y) != 'Y' && field.getSymbol(new_x, new_y) != '@')
         {
             field.setSymbol(this->getX_pos(), this->getY_pos(), ' ');
             this->setX_pos(new_x);

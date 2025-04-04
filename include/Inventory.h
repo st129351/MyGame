@@ -26,13 +26,6 @@ public:
     std::string show();
 
     void add(std::shared_ptr<Amulet> item);
-
-    // void remove(std::shared_ptr<Amulet> item);
-
-    // void put_on(size_t index);
-
-    // void take_off(size_t index);
-
 };
 
 #endif
