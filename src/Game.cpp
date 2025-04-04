@@ -47,7 +47,7 @@ void Game::start_game()
 	{
 		if (field.getEnemies().empty() && !completeLevel)
 		{
-			int count = 0;
+			size_t count = 0;
 			for (std::shared_ptr<NPC> npc : field.getNPC())
 			{
 				if (npc->getDialogueComplete())
