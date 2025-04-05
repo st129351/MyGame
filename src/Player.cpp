@@ -19,7 +19,7 @@ Player::Player(): Fighter("", 100, 10), max_level(3), inventory(*this)
 {
     this->level = 1;
     this->exp = 0;
-    this->gold = 1000;
+    this->gold = 100;
     this->x_pos = 14;  // начальная позиция x
     this->y_pos = 13;   // начальная позиция y (центр по вертикали)
     std::cout << "\033[2J\033[1;1H";
