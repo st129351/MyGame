@@ -106,7 +106,7 @@ void Game::start_game()
 		{
 			std::cout << enemy->getName() << " HP:" << enemy->getHealth() <<std::endl;
 		}
-		std::cout << "your HP:" << player.getHealth() << "; your EXP: " << player.getExp() << "; your Gold: " << player.getGold() << std::endl;
+		std::cout << "Your Level: "<< player.getLevel() << "; your HP:" << player.getHealth() << "; your Damage:" << player.getDamage() <<"; your EXP: " << player.getExp() << "; your Gold: " << player.getGold() << std::endl;
 
 		if (!player.isAlive())
 		{
@@ -164,6 +164,15 @@ void Game::start_game()
 		{
 			player.getDash()->use(player);
 		}
+		
+		if (player.getExp() >= 10)
+		{
+			player.levelUp();
+		}
+		if (player.getExp() >= 25)
+		{
+			player.levelUp();
+		}
 	}
 }
 
@@ -197,8 +206,6 @@ void Game::startVillage()
 {
 	if (!endGame)
 	{
-		unsigned int health = 100;
-		player.setHealth(health);
 		std::cout << "\033[2J\033[1;1H";
 		std::cout << "Welcome to the old... Old village!" << std::endl;
 		std::cout << "Press enter to continue..." << std::endl;
@@ -222,8 +229,6 @@ void Game::Level_2()
 {
 	if (!endGame)
 	{
-		unsigned int health = 100;
-		player.setHealth(health);
 		std::cout << "\033[2J\033[1;1H";
 		std::cout << "What?! What is it..?" << std::endl;
 		std::cout << "Press enter to continue..." << std::endl;
