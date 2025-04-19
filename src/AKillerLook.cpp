@@ -16,7 +16,7 @@ void AKillerLook::use(Player& p)
     for (std::shared_ptr<Enemy> enemy : enemies)
     {
         unsigned int percent = fear_percentage * p.getLevel();
-        int reduce = std::floor(enemy->getIQ() * percent / 100);
+        unsigned int reduce = std::floor(enemy->getIQ() * percent / 100);
         if (reduce > enemy->getDamage())
         {
             unsigned int value = 1;
