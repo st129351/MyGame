@@ -7,6 +7,7 @@ Enemy::Enemy(std::string name, unsigned int health, unsigned int damage, unsigne
     this->iq = iq;
     this->exp = exp;
     this->player = player;
+    this->enemy_description = "Enemy";
 }
 
 std::string Enemy::getEnemyDescription() const

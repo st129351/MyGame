@@ -10,13 +10,16 @@ class Player;
 class ADash : public Amulet
 {
 private:
-    GameField& field;
+    GameField* field;
     struct DashVisual
     {
         int x, y;
     };
     std::vector<DashVisual> dash_visual;
 public:
+    // Конструктор для тестирования
+    ADash();
+    // Основной конструктор
     ADash(GameField& f);
     ~ADash() override;
     void UpdateDashVisual();

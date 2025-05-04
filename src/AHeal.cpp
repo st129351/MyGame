@@ -12,17 +12,9 @@ AHeal::~AHeal() {}
 void AHeal::use(Player& p)
 {
     unsigned int new_health1 = p.getHealth() + heal_value;
-    unsigned int new_health2 = 100;
     if (p.getHealth() < 100)
     {
-        if (p.getHealth() > 95)
-        {
-            p.setHealth(new_health2);
-        }
-        else
-        {
-            p.setHealth(new_health1);
-        }
+        p.setHealth(new_health1);
     }
     else
     {

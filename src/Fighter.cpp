@@ -44,6 +44,11 @@ bool Fighter::isAlive() const
 
 void Fighter::takeDamage(unsigned int damage)
 {
+    if (health == 0)
+    {
+        return;
+    }
+    
     if (damage >= health)
     {
         health = 0;

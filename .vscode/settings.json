@@ -72,6 +72,8 @@
         "system_error": "cpp",
         "format": "cpp",
         "text_encoding": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "any": "cpp",
+        "span": "cpp"
     }
 }

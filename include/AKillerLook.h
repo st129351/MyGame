@@ -23,7 +23,6 @@ public:
 
     unsigned int getFearPercentage() const;
     std::string getKillerLookDescription() const;
-    void setKillerLookDescription(std::string new_killer_look_description);
 };
 
 #endif

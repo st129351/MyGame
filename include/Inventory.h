@@ -26,6 +26,9 @@ public:
     std::string show();
 
     void add(std::shared_ptr<Amulet> item);
+    
+    // Метод для получения доступных слотов
+    unsigned int getAvailableSlots() const;
 };
 
 #endif
