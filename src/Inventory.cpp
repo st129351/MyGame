@@ -47,3 +47,8 @@ void Inventory::add(std::shared_ptr<Amulet> item)
         std::cout << "Inventory is full" << std::endl;
     }
 }
+
+unsigned int Inventory::getAvailableSlots() const
+{
+    return max_slots - size;
+}

@@ -16,7 +16,6 @@ public:
     ~APerseverance() override;
 
     void use(Player& p) override;
-    void warning();
 
     unsigned int getAdditionalHealth() const;
     void setAdditionalHealth(unsigned int new_additional_health);

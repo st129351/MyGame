@@ -56,7 +56,7 @@ private:
     std::vector<AttackVisual> attack_visuals; // vector for attack visuals
 
 public:
-    Player();
+    Player(std::string name);
     
     void onDeath() override;
     void levelUp();
@@ -84,6 +84,9 @@ public:
     std::shared_ptr<BestExp> getBestExp();
     std::shared_ptr<AHeal> getHeal();
     std::shared_ptr<ADash> getDash();
+    std::shared_ptr<AMadness> getMadness();
+    std::shared_ptr<AKillerLook> getKillerLook();
+    std::shared_ptr<AFearOfDeath> getFearOfDeath();
     // setters
     void setExp(unsigned int new_exp);
     void setGold(unsigned int new_gold);

@@ -12,12 +12,24 @@ YardDragon::YardDragon(std::string name, unsigned int health, unsigned int damag
 
 void YardDragon::onDeath()
 {
+    // Проверка, вызывалась ли уже функция. Чтобы избежать двойного начисления
+    static bool ODProgress = false; // on death in progress - ODProgress
+    
+    if (ODProgress) {
+        return;
+    }
+    
+    ODProgress = true;
+    
     Player& curr_player = this->getPlayer();
     unsigned int new_exp = curr_player.getExp() + this->getExp();
     curr_player.setExp(new_exp);
     unsigned int new_gold = curr_player.getGold() + this->getExp() * 2;
     curr_player.setGold(new_gold);
+    
     std::cout << "💥 Yard dragon is dead 💥" << std::endl;
+    
+    ODProgress = false;
 }
 
 void YardDragon::FireAttack(GameField& field, Player& player)
