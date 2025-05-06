@@ -1,3 +1,6 @@
+//Lichkovaha Daniil
+//st129351@student.spbu.ru
+//LabWork2
 #include "YardDragon.h"
 #include "Player.h"
 #include "GameField.h"
@@ -12,7 +15,7 @@ YardDragon::YardDragon(std::string name, unsigned int health, unsigned int damag
 
 void YardDragon::onDeath()
 {
-    // Проверка, вызывалась ли уже функция. Чтобы избежать двойного начисления
+    // static - save value of var between come into func
     static bool ODProgress = false; // on death in progress - ODProgress
     
     if (ODProgress) {

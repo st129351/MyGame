@@ -1,3 +1,6 @@
+//Lichkovaha Daniil
+//st129351@student.spbu.ru
+//LabWork2
 #include "Slime.h"
 #include "Player.h"
 #include "GameField.h"
@@ -11,7 +14,6 @@ Slime::Slime(std::string name, unsigned int health, unsigned int damage, unsigne
 
 void Slime::onDeath()
 {
-    // Проверка, вызывалась ли уже функция. Чтобы избежать двойного начисления
     static bool ODProgress = false;
     
     if (ODProgress) {

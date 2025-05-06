@@ -1,3 +1,6 @@
+//Lichkovaha Daniil
+//st129351@student.spbu.ru
+//LabWork2
 #include "Bandit.h"
 #include "Player.h"
 #include "GameField.h"

@@ -1,3 +1,6 @@
+//Lichkovaha Daniil
+//st129351@student.spbu.ru
+//LabWork2
 #include "GameField.h"
 #include "Player.h"
 #include "Slime.h"

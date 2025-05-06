@@ -53,7 +53,7 @@ protected:
     }
 };
 
-TEST_F(EnemyBaseTest, Initialization) {
+TEST_F(EnemyBaseTest, Init) {
     // Check values set by constructor (using getters from Enemy and Fighter)
     EXPECT_EQ(test_enemy->getName(), initial_name);
     EXPECT_EQ(test_enemy->getHealth(), initial_health);

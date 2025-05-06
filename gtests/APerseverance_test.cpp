@@ -12,7 +12,7 @@
 typedef AmuletTest<APerseverance> APerseveranceTestFixture;
 
 // Test Case 1: Initialization
-TEST_F(APerseveranceTestFixture, Initialization)
+TEST_F(APerseveranceTestFixture, Init)
 {
     EXPECT_EQ(amulet->getCost(), 100);
     EXPECT_EQ(amulet->getName(), "perseverance");

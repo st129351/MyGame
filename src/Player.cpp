@@ -1,3 +1,6 @@
+//Lichkovaha Daniil
+//st129351@student.spbu.ru
+//LabWork2
 #include "Player.h"
 #include "Enemy.h"
 #include "GameField.h"
@@ -20,8 +23,8 @@ Player::Player(std::string name): Fighter("", 100, 10), max_level(3), inventory(
     this->level = 1;
     this->exp = 0;
     this->gold = 100;
-    this->x_pos = 14;  // начальная позиция x
-    this->y_pos = 13;   // начальная позиция y (центр по вертикали)
+    this->x_pos = 14;  
+    this->y_pos = 13;  
     std::cout << "\033[2J\033[1;1H";
     setName(name);
     persev_flag = false;
@@ -35,7 +38,7 @@ Player::Player(std::string name): Fighter("", 100, 10), max_level(3), inventory(
     persev = nullptr;
     best_exp = nullptr;
     heal = nullptr;
-    dash = nullptr; // ADash require GameField, which isn't
+    dash = nullptr;
 }
 
 void Player::onDeath()

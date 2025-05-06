@@ -1,3 +1,6 @@
+//Lichkovaha Daniil
+//st129351@student.spbu.ru
+//LabWork2
 #include "Fighter.h"
 
 Fighter::Fighter(const std::string& name, unsigned int health, unsigned int damage)

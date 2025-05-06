@@ -41,7 +41,7 @@ protected:
     }
 };
 
-TEST_F(GameFieldTest, Initialization) {
+TEST_F(GameFieldTest, Init) {
     // Check boundaries
     EXPECT_EQ(field->getSymbol(0, 0), '#');
     EXPECT_EQ(field->getSymbol(29, 0), '#');

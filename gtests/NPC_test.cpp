@@ -7,16 +7,12 @@
 #include <memory>
 #include <string>
 
-// Минимальный конкретный класс для тестирования абстрактного класса NPC
 class TestNPC : public NPC {
 public:
-    // Используем конструктор базового класса
     TestNPC(const std::string& name, const std::string& description)
         : NPC(name, description) {}
 
-    // Реализация абстрактного метода
     void speak() override {
-        // Тестовая реализация
         setDialogueComplete(true);
     }
 };
@@ -25,11 +21,9 @@ class NPCTest : public ::testing::Test {
 protected:
     std::shared_ptr<TestNPC> npc;
 
-    // Исходные значения для тестов
     const std::string initial_name = "TestNPC";
     const std::string initial_description = "Test description for NPC";
     
-    // Начальные координаты для тестов
     const int initial_x = 5;
     const int initial_y = 7;
 
@@ -44,21 +38,18 @@ protected:
     }
 };
 
-TEST_F(NPCTest, Initialization)
+TEST_F(NPCTest, Init)
 {
-    // Проверка инициализации
     EXPECT_EQ(npc->getName(), initial_name);
     EXPECT_EQ(npc->getDescription(), initial_description);
     EXPECT_FALSE(npc->getDialogueComplete());
     
-    // Проверка начальных координат
     EXPECT_EQ(npc->getX_pos(), initial_x);
     EXPECT_EQ(npc->getY_pos(), initial_y);
 }
 
-TEST_F(NPCTest, NameAndDescriptionManagement)
+TEST_F(NPCTest, StrsManagement)
 {
-    // Тестирование геттеров и сеттеров для имени и описания
     std::string new_name = "NewNPC";
     std::string new_description = "New description";
     
@@ -69,9 +60,8 @@ TEST_F(NPCTest, NameAndDescriptionManagement)
     EXPECT_EQ(npc->getDescription(), new_description);
 }
 
-TEST_F(NPCTest, PositionManagement)
+TEST_F(NPCTest, PosManagement)
 {
-    // Тестирование геттеров и сеттеров для координат
     int new_x = 10, new_y = 12;
     
     npc->setX_pos(new_x);
@@ -83,7 +73,6 @@ TEST_F(NPCTest, PositionManagement)
 
 TEST_F(NPCTest, DialogueCompleteFlag)
 {
-    // Проверка флага завершения диалога
     EXPECT_FALSE(npc->getDialogueComplete());
     
     npc->setDialogueComplete(true);
@@ -95,11 +84,9 @@ TEST_F(NPCTest, DialogueCompleteFlag)
 
 TEST_F(NPCTest, Speak)
 {
-    // Тестирование метода speak() в нашей реализации
     EXPECT_FALSE(npc->getDialogueComplete());
     
     npc->speak();
     
-    // После выполнения speak() флаг должен быть установлен в true
     EXPECT_TRUE(npc->getDialogueComplete());
 } 

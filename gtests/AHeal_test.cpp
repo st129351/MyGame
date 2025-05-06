@@ -6,7 +6,7 @@
 #include "AHeal.h"
 
 typedef AmuletTest<AHeal> Heal;
-TEST_F(Heal, Initialization)
+TEST_F(Heal, Init)
 {
     EXPECT_EQ(amulet->getCost(), 15);
     EXPECT_EQ(amulet->getName(), "heal");

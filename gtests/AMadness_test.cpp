@@ -12,7 +12,7 @@
 typedef AmuletTest<AMadness> AMadnessTestFixture; // Renamed to avoid conflict with class name
 
 // Test Case 1: Initialization
-TEST_F(AMadnessTestFixture, Initialization)
+TEST_F(AMadnessTestFixture, Init)
 {
     // Check base Amulet properties set in AMadness constructor
     EXPECT_EQ(amulet->getCost(), 50);

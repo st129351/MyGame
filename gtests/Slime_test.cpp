@@ -38,7 +38,6 @@ protected:
         
         field = std::make_shared<GameField>(*player, dragon);
         
-        // Установим слайма на поле для тестирования
         slime->setX_pos(5);
         slime->setY_pos(5);
         field->setSymbol(5, 5, 's');
@@ -49,7 +48,7 @@ protected:
     }
 };
 
-TEST_F(SlimeTest, Initialization)
+TEST_F(SlimeTest, Init)
 {
     EXPECT_EQ(slime->getName(), slime_name);
     EXPECT_EQ(slime->getHealth(), initial_health);
@@ -57,11 +56,10 @@ TEST_F(SlimeTest, Initialization)
     EXPECT_EQ(slime->getIQ(), initial_iq);
     EXPECT_EQ(slime->getExp(), initial_exp);
     
-    // Проверка уникальных свойств слайма
     EXPECT_EQ(slime->getPoisonDamage(), initial_poison_damage);
 }
 
-TEST_F(SlimeTest, PositionManagement)
+TEST_F(SlimeTest, PosnManage)
 {
     slime->setX_pos(3);
     slime->setY_pos(3);
@@ -69,7 +67,7 @@ TEST_F(SlimeTest, PositionManagement)
     EXPECT_EQ(slime->getY_pos(), 3);
 }
 
-TEST_F(SlimeTest, PoisonDamageManagement)
+TEST_F(SlimeTest, PoisonDamageManage)
 {
     unsigned int new_poison_damage = 7;
     slime->setPoisonDamage(new_poison_damage);
@@ -78,26 +76,20 @@ TEST_F(SlimeTest, PoisonDamageManagement)
 
 TEST_F(SlimeTest, Movement)
 {
-    // Изначально слайм находится в (5,5), а игрок в (10,10)
-    // Слайм должен двигаться к игроку, учитывая что abs(dist_x) == abs(dist_y)
-    // Согласно логике в move() в Slime.cpp, слайм должен двигаться по X
     int initial_x = slime->getX_pos();
     int initial_y = slime->getY_pos();
     
     slime->move(*player, *field);
     
-    // Проверяем, что слайм двинулся на 1 клетку в сторону игрока
     EXPECT_EQ(slime->getX_pos(), initial_x + 1);
     EXPECT_EQ(slime->getY_pos(), initial_y);
     
-    // Проверяем, что старое место пусто, а новое содержит слайма
     EXPECT_EQ(field->getSymbol(initial_x, initial_y), ' ');
     EXPECT_EQ(field->getSymbol(initial_x + 1, initial_y), 's');
 }
 
-TEST_F(SlimeTest, MovementWhenBlockedByWall)
+TEST_F(SlimeTest, MoveByWall)
 {
-    // Поставим стену перед слаймом
     int wall_x = slime->getX_pos() + 1;
     int wall_y = slime->getY_pos();
     field->setSymbol(wall_x, wall_y, '#');
@@ -107,7 +99,6 @@ TEST_F(SlimeTest, MovementWhenBlockedByWall)
     
     slime->move(*player, *field);
     
-    // Проверяем, что слайм не смог двинуться из-за стены
     EXPECT_EQ(slime->getX_pos(), initial_x);
     EXPECT_EQ(slime->getY_pos(), initial_y);
 }
@@ -118,10 +109,8 @@ TEST_F(SlimeTest, TakeDamage)
     slime->takeDamage(damage);
     EXPECT_EQ(slime->getHealth(), initial_health - damage);
     
-    // Убедимся, что слайм не умирает если у него остаётся здоровье
     EXPECT_TRUE(slime->isAlive());
     
-    // Нанесем смертельный урон
     slime->takeDamage(initial_health);
     EXPECT_EQ(slime->getHealth(), 0);
     EXPECT_FALSE(slime->isAlive());
@@ -129,20 +118,15 @@ TEST_F(SlimeTest, TakeDamage)
 
 TEST_F(SlimeTest, ApplyPoison)
 {
-    // Запоминаем начальное здоровье игрока
     unsigned int initial_player_health = player->getHealth();
     
-    // Применяем яд
     slime->applyPoison(*player);
     
-    // Проверяем, что игроку был нанесен урон от яда
     EXPECT_EQ(player->getHealth(), initial_player_health - slime->getPoisonDamage());
     
-    // Повторно применяем яд, так как слайм продолжает отравлять игрока некоторое время
     unsigned int current_player_health = player->getHealth();
     slime->applyPoison(*player);
     
-    // Проверяем, что игроку был нанесен дополнительный урон
     EXPECT_EQ(player->getHealth(), current_player_health - slime->getPoisonDamage());
 }
 
@@ -153,7 +137,7 @@ TEST_F(SlimeTest, OnDeath)
 
     slime->takeDamage(initial_health);
     EXPECT_FALSE(slime->isAlive());
-    
+
     EXPECT_EQ(player->getExp(), initial_player_exp + slime->getExp());
     EXPECT_EQ(player->getGold(), initial_player_gold + slime->getExp() * 2);
 } 

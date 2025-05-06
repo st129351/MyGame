@@ -69,7 +69,7 @@ protected:
     }
 };
 
-TEST_F(AKillerLookTest, Initialization) {
+TEST_F(AKillerLookTest, Init) {
     EXPECT_EQ(amulet->getCost(), 105);
     EXPECT_EQ(amulet->getName(), "killer look");
     // Note: Original description has a typo "tremblue". Test against the actual implemented string.

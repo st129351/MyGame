@@ -47,7 +47,7 @@ protected:
     }
 };
 
-TEST_F(FighterBaseTest, Initialization) {
+TEST_F(FighterBaseTest, Init) {
     EXPECT_EQ(fighter1->getName(), initial_name1);
     EXPECT_EQ(fighter1->getHealth(), initial_health1);
     EXPECT_EQ(fighter1->getDamage(), initial_damage1);
