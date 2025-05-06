@@ -21,7 +21,7 @@ protected:
     }
 };
 
-TEST_F(ElderTest, Initialization)
+TEST_F(ElderTest, Init)
 {
     // Check base NPC properties set by Elder's constructor
     EXPECT_EQ(elder->getName(), "Elder");

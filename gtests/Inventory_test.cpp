@@ -38,7 +38,7 @@ protected:
     }
 };
 
-TEST_F(InventoryTest, Initialization)
+TEST_F(InventoryTest, Init)
 {
     EXPECT_NE(inventory, nullptr);
     std::string initialShow = inventory->show();

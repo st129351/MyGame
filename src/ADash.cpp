@@ -1,11 +1,12 @@
+//Lichkovaha Daniil
+//st129351@student.spbu.ru
+//LabWork2
 #include "ADash.h"
 #include "GameField.h"
 #include "Player.h"
 
-// Конструктор для тестирования
 ADash::ADash() : Amulet(25, false, "dash", "incredible speed, press 'k'", 8), field(nullptr) {}
 
-// Основной конструктор
 ADash::ADash(GameField& f) : Amulet(25, false, "dash", "incredible speed, press 'k'", 8), field(&f) {}
 
 ADash::~ADash() {};

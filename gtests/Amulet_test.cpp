@@ -51,7 +51,7 @@ protected:
 };
 
 // Test getters and setters inherited from Amulet
-TEST_F(AmuletBaseTest, GettersAndSetters)
+TEST_F(AmuletBaseTest, GetAndSet)
 {
     // Check initial values using getters
     EXPECT_EQ(test_amulet->getCost(), initial_cost);
@@ -82,7 +82,7 @@ TEST_F(AmuletBaseTest, GettersAndSetters)
 }
 
 // Test the dummy 'use' method (optional, just to ensure it runs)
-TEST_F(AmuletBaseTest, UseMethodCall)
+TEST_F(AmuletBaseTest, UseCall)
 {
     EXPECT_FALSE(test_amulet->getUsage()); // Initial state
     test_amulet->use(*player);

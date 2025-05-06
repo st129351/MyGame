@@ -56,7 +56,7 @@ protected:
     }
 };
 
-TEST_F(BanditTest, Initialization)
+TEST_F(BanditTest, Init)
 {
     // Check stats set in constructor (using getters from Fighter/Enemy)
     EXPECT_EQ(bandit->getName(), bandit_name);

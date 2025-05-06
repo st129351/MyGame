@@ -12,7 +12,7 @@
 typedef AmuletTest<BestExp> BestExpTestFixture;
 
 // Test Case 1: Initialization
-TEST_F(BestExpTestFixture, Initialization)
+TEST_F(BestExpTestFixture, Init)
 {
     // Check base Amulet properties set in BestExp constructor
     EXPECT_EQ(amulet->getCost(), 15);

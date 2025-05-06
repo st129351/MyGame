@@ -1,3 +1,6 @@
+//Lichkovaha Daniil
+//st129351@student.spbu.ru
+//LabWork2
 #include "Elder.h"
 
 Elder::Elder() : NPC("Elder", "The Elder of ancient village.") 

@@ -29,7 +29,6 @@ protected:
 
     void TearDown() override 
     {
-        // Умные указатели сами освободят память
     }
 };
 
